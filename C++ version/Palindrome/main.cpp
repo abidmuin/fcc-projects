@@ -9,41 +9,49 @@
 #include <algorithm>
 using namespace std;
 
+bool Palindrome(string);
+
 int main()
 {
     string str;
     getline(cin, str);
+    Palindrome(str);
 
+    return 0;
+}
+
+bool Palindrome(string str)
+{
     //Printing original string
-    cout << endl;
-    cout << "Original= " << str << endl;
-    cout << "String length= " << str.length() << endl;
-    cout << endl;
+//    cout << endl;
+//    cout << "Original= " << str << endl;
+//    cout << "String length= " << str.length() << endl;
+//    cout << endl;
 
     //To lower case conversion
-    for(unsigned int i=0; i<str.length(); i++)
+    for(int i=0; i<str.length(); i++)
         str[i]=tolower(str[i]);
-    cout << "Case conversion= " << str << endl;
-    cout << "String length= " << str.length() << endl;
-    cout << endl;
+//    cout << "Case conversion= " << str << endl;
+//    cout << "String length= " << str.length() << endl;
+//    cout << endl;
 
     //Remove whitespace
     for(int k=0; k<str.length(); k++){
         if(str[k] == ' ')
             str.erase(k,1);
     }
-    cout << "Remove whitespace " << str << endl;
-    cout << "String length " << str.length() << endl;
-    cout << endl;
+//    cout << "Remove whitespace " << str << endl;
+//    cout << "String length " << str.length() << endl;
+//    cout << endl;
 
     //Remove alphanumeric
     for(int l=0; l<str.length(); l++){
         if(!isalnum(str[l]))
             str.erase(l,1);
     }
-    cout << "Remove alphanumeric= " << str << endl;
-    cout << "String length= " << str.length() << endl;
-    cout << endl;
+//    cout << "Remove alphanumeric= " << str << endl;
+//    cout << "String length= " << str.length() << endl;
+//    cout << endl;
 
     //Palindrome check
     int y=str.length()-1;
@@ -54,6 +62,4 @@ int main()
         }
     }
     cout << "true" << endl;
-
-    return 0;
 }
