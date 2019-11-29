@@ -1,0 +1,11 @@
+# depslib dependency file v1.0
+1575029660 source:e:\workspace\1. problem solving\freecodecamp\palindrome\main.cpp
+	<iostream>
+	<bits/stdc++.h>
+	<string>
+	<string.h>
+	<cstring>
+	<ctype.h>
+	<cctype>
+	<algorithm>
+
