@@ -40,14 +40,14 @@ function convertToRoman(num) {
 	}
 
 	let result = "";
-	const romans = Object.keys(valueMapping);
+	const romansNumeral = Object.keys(valueMapping);
 
-	for (const romansKey in romans) {
-		const romanValue = valueMapping[romans[romansKey]];
+	for (const index in romansNumeral) {
+		const val = valueMapping[romansNumeral[index]];
 
-		while (num >= romanValue) {
-			num -= romanValue;
-			result += romans[romansKey];
+		while (num >= val) {
+			num -= val;
+			result += romansNumeral[index];
 		}
 	}
 
