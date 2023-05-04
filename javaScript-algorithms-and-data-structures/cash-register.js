@@ -62,7 +62,7 @@ function checkCashRegister(price, cash, cid) {
 	const changeArr = [];
 	let result = {status: "", change: []};
 
-	if(change > totalCashInDrawer){
+	if (change > totalCashInDrawer) {
 		result.status = "INSUFFICIENT_FUNDS";
 		result.change = changeArr;
 	}
