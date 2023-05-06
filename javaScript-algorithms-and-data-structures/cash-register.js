@@ -66,6 +66,8 @@ function checkCashRegister(price, cash, cid) {
 		result.status = "INSUFFICIENT_FUNDS";
 		result.change = changeArr;
 	}
+	else if(change == totalCashInDrawer){
+	}
 	
 	// TODO: Other cases
 
