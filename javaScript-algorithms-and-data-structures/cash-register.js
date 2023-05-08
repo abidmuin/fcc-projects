@@ -65,11 +65,11 @@ function checkCashRegister(price, cash, cid) {
 	if (change > totalCashInDrawer) {
 		result.status = "INSUFFICIENT_FUNDS";
 		result.change = changeArr;
+	} else if (change.toFixed(2) === totalCashInDrawer) {
+		return {status: "CLOSED", change: cid};
+	} else {
+
 	}
-	else if(change == totalCashInDrawer){
-	}
-	
-	// TODO: Other cases
 
 	return result;
 }
