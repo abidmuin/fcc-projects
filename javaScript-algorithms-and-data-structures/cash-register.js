@@ -39,39 +39,67 @@ See below for an example of a cash-in-drawer array:
 */
 
 function checkCashRegister(price, cash, cid) {
-	const currencyUnits = {
-		"PENNY": .01,
-		"NICKEL": .05,
-		"DIME": .1,
-		"QUARTER": .25,
-		"ONE": 1,
-		"FIVE": 5,
-		"TEN": 10,
-		"TWENTY": 20,
-		"ONE HUNDRED": 100
-	}
+	const currencyUnits = [
+		["PENNY", 1],
+		["NICKEL", 5],
+		["DIME", 10],
+		["QUARTER", 25],
+		["ONE", 100],
+		["FIVE", 500],
+		["TEN", 1000],
+		["TWENTY", 2000],
+		["ONE HUNDRED", 10000]
+	];
 
 	let totalCashInDrawer = 0;
-	for (let val of cid) {
-		totalCashInDrawer += val[1];
+	
+	for (const [unit, amount] of cid) {
+		totalCashInDrawer += amount * 100; // Convert to cents
 	}
-	totalCashInDrawer = totalCashInDrawer.toFixed(2);
 
-	let change = cash - price;
+	let changeDue = (cash - price) * 100; // Convert to cents
+	let changeArr = [];
 
-	const changeArr = [];
-	let result = {status: "", change: []};
-
-	if (change > totalCashInDrawer) {
-		result.status = "INSUFFICIENT_FUNDS";
-		result.change = changeArr;
-	} else if (change.toFixed(2) === totalCashInDrawer) {
-		return {status: "CLOSED", change: cid};
+	if (changeDue > totalCashInDrawer) {
+		return { status: "INSUFFICIENT_FUNDS", change: [] };
+	} else if (changeDue === totalCashInDrawer) {
+		return { status: "CLOSED", change: cid };
 	} else {
+		for (let i = currencyUnits.length - 1; i >= 0; i--) {
+			const [unit, value] = currencyUnits[i];
+			const availableAmount = cid[i][1] * 100; // Convert to cents
+			const maxToUse = Math.floor(availableAmount / value) * value;
 
+			if (changeDue >= value) {
+				let usedAmount = 0;
+				while (changeDue >= value && usedAmount < maxToUse) {
+					changeDue -= value;
+					usedAmount += value;
+				}
+
+				changeArr.push([unit, usedAmount / 100]); // Convert back to dollars
+				cid[i][1] -= usedAmount / 100; // Update available amount in drawer
+			}
+		}
 	}
 
-	return result;
+	if (changeDue > 0) {
+		return { status: "INSUFFICIENT_FUNDS", change: [] };
+	}
+
+	return { status: "OPEN", change: changeArr };
 }
 
-checkCashRegister(19.5, 20, [["PENNY", 1.01], ["NICKEL", 2.05], ["DIME", 3.1], ["QUARTER", 4.25], ["ONE", 90], ["FIVE", 55], ["TEN", 20], ["TWENTY", 60], ["ONE HUNDRED", 100]]);
+const result = checkCashRegister(19.5, 20, [
+	["PENNY", 1.01],
+	["NICKEL", 2.05],
+	["DIME", 3.1],
+	["QUARTER", 4.25],
+	["ONE", 90],
+	["FIVE", 55],
+	["TEN", 20],
+	["TWENTY", 60],
+	["ONE HUNDRED", 100]
+]);
+
+console.log(result);
